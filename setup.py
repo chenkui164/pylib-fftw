@@ -71,5 +71,7 @@ setup(name=name,
       long_description='Binary distribution of FFTW3 static libraries',
       author='chenkui164',
       ext_modules=[Extension("pylib_fftw3.placeholder", ['pylib_fftw3/placeholder.c'])],
-      cmdclass={'build_clib': MyBuildCLib,'bdist_wheel': bdist_wheel})
+      cmdclass={'build_clib': MyBuildCLib,'bdist_wheel': bdist_wheel},
+      options={'bdist_wheel':{'universal':True}}
+      )
 

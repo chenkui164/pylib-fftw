@@ -64,7 +64,7 @@ class MyBuildCLib(build_clib):
         os.chdir(cwd)
 
 setup(name=name,
-      version=FFTW3Version,
+      version='0.0.1',
       packages=[name],
       libraries=[(name, {'sources': []})],
       description='Python packaging of FFTW3',

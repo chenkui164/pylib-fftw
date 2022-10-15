@@ -16,6 +16,8 @@ import glob
 FFTW3Version = '3.3.10'
 name = 'pylib_fftw3'
 
+des = "Python packaging of FFTW3 {version}".format(version=FFTW3Version)
+
 
 class MyBuildCLib(build_clib):
     def run(self):
@@ -64,10 +66,10 @@ class MyBuildCLib(build_clib):
         os.chdir(cwd)
 
 setup(name=name,
-      version='0.0.1',
+      version='0.0.2',
       packages=[name],
       libraries=[(name, {'sources': []})],
-      description='Python packaging of FFTW3',
+      description=des,
       long_description='Binary distribution of FFTW3 static libraries',
       author='chenkui164',
       ext_modules=[Extension("pylib_fftw3.placeholder", ['pylib_fftw3/placeholder.c'])],

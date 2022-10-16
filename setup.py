@@ -60,6 +60,7 @@ class MyBuildCLib(build_clib):
                                '-DCMAKE_BUILD_TYPE=Release',
                                '-DBUILD_SHARED_LIBS=OFF',
                                '-DENABLE_FLOAT=ON',
+                               '-DCMAKE_POSITION_INDEPENDENT_CODE=ON',
                                os.path.join(
                                    cwd, 'fftw-{version}'.format(version=FFTW3Version)),
                                "-DCMAKE_INSTALL_PREFIX=" + install_prefix])
@@ -75,7 +76,7 @@ class MyBuildCLib(build_clib):
 
 
 setup(name=name,
-      version='0.0.3',
+      version='0.0.4',
       packages=[name],
       libraries=[(name, {'sources': []})],
       description=des,

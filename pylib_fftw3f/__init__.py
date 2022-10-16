@@ -2,9 +2,9 @@ import os
 import sys
 
 if sys.platform == "win32":
-    static_library = "fftw3.lib"
+    static_library = "fftw3f.lib"
 else:
-    static_library = "libfftw3.a"
+    static_library = "libfftw3f.a"
 
 __dir__ = os.path.dirname(__file__)
 include_dirs = os.path.join(__dir__, 'include'),

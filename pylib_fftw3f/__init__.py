@@ -7,7 +7,7 @@ else:
     static_library = "libfftw3f.a"
 
 __dir__ = os.path.dirname(__file__)
-include_dirs = os.path.join(__dir__, 'include'),
+include_dir = os.path.join(__dir__, 'include'),
 if os.path.isdir(os.path.join(__dir__, 'lib')):
     library_dir = os.path.join(__dir__, 'lib')
 elif os.path.isdir(os.path.join(__dir__, 'lib64')):

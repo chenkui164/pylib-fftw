@@ -76,7 +76,7 @@ class MyBuildCLib(build_clib):
 
 
 setup(name=name,
-      version='0.0.4',
+      version='0.0.5',
       packages=[name],
       libraries=[(name, {'sources': []})],
       description=des,

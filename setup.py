@@ -64,8 +64,8 @@ class MyBuildCLib(build_clib):
         if platform == "win32":
             builder = ["cmake", "--build", '.']
             arch = 'x64'
-            import platform
-            if platform.architecture()[0] == '32bit':
+            import platform as plat
+            if plat.architecture()[0] == '32bit':
                 arch = 'Win32'
             cmake_config.append('-A')
             cmake_config.append(arch)

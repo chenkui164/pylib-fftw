@@ -39,14 +39,15 @@ class MyBuildCLib(build_clib):
         with tarfile.open(fname, "r:gz") as tar:
             tar.extractall()
 
-        print("Building FFTW3 version {}".format(FFTW3Version))
-        cwd = os.getcwd()
-        os.chdir(self.build_temp)
-
         try:
             os.makedirs(self.build_temp)
         except OSError:
             pass
+
+        print("Building FFTW3 version {}".format(FFTW3Version))
+        cwd = os.getcwd()
+        os.chdir(self.build_temp)
+
 
         guess_libplat = glob.glob(os.path.join(cwd, 'build', 'lib*'))[0]
         install_prefix = os.path.join(guess_libplat, 'pylib_fftw3f')

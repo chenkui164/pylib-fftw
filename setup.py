@@ -39,31 +39,41 @@ class MyBuildCLib(build_clib):
         with tarfile.open(fname, "r:gz") as tar:
             tar.extractall()
 
-        import subprocess
         print("Building FFTW3 version {}".format(FFTW3Version))
-        if platform == "win32":
-            builder = ["cmake", "--build", '.']
-        else:
-            builder = ['make', '-j2']
+        cwd = os.getcwd()
+        os.chdir(self.build_temp)
 
         try:
             os.makedirs(self.build_temp)
         except OSError:
             pass
 
-        cwd = os.getcwd()
-        os.chdir(self.build_temp)
-        # this is clumsy <3
         guess_libplat = glob.glob(os.path.join(cwd, 'build', 'lib*'))[0]
         install_prefix = os.path.join(guess_libplat, 'pylib_fftw3f')
-        subprocess.check_call(["cmake",
-                               '-DCMAKE_BUILD_TYPE=Release',
-                               '-DBUILD_SHARED_LIBS=OFF',
-                               '-DENABLE_FLOAT=ON',
-                               '-DCMAKE_POSITION_INDEPENDENT_CODE=ON',
-                               os.path.join(
-                                   cwd, 'fftw-{version}'.format(version=FFTW3Version)),
-                               "-DCMAKE_INSTALL_PREFIX=" + install_prefix])
+
+        cmake_config = ["cmake",
+                        '-DCMAKE_BUILD_TYPE=Release',
+                        '-DBUILD_SHARED_LIBS=OFF',
+                        '-DENABLE_FLOAT=ON',
+                        '-DCMAKE_POSITION_INDEPENDENT_CODE=ON',
+                        os.path.join(
+                            cwd, 'fftw-{version}'.format(version=FFTW3Version)),
+                        "-DCMAKE_INSTALL_PREFIX=" + install_prefix]
+
+        if platform == "win32":
+            builder = ["cmake", "--build", '.']
+            arch = 'x64'
+            import platform
+            if platform.architecture()[0] == '32bit':
+                arch = 'Win32'
+            cmake_config.append('-A')
+            cmake_config.append(arch)
+        else:
+            builder = ['make', '-j2']
+
+        import subprocess
+        print('cmake_config is {}'.format(cmake_config))
+        subprocess.check_call(cmake_config)
         subprocess.check_call(builder)
         subprocess.check_call(["cmake", "--build", '.', '--target', 'install'])
 
@@ -76,7 +86,7 @@ class MyBuildCLib(build_clib):
 
 
 setup(name=name,
-      version='0.0.5',
+      version='0.0.6',
       packages=[name],
       libraries=[(name, {'sources': []})],
       description=des,
